@@ -186,7 +186,6 @@ def reduce_pol_by_pol(f: Polinomio, g: Polinomio) -> Polinomio:
             # Il lead term di h non è riducibile, spostalo in r
             r = normal_pol_form(r + Polinomio([lt_h]))
             h = normal_pol_form(h - Polinomio([lt_h]))
-    
     return r
 
 
@@ -200,7 +199,6 @@ def reduce_by_set(f: Polinomio, G: List[Polinomio]) -> Polinomio:
             if new_reduced != reduced_f:
                 reduced_f = new_reduced
                 changed = True
-                break
     return reduced_f
 
 def gcd_mon(a: Monomio, b: Monomio) -> Monomio:
@@ -426,6 +424,11 @@ def polinomial_product(F: List[Polinomio]) -> Polinomio:
     for p in F:
         result = normal_pol_form(result * p)
     return result
+
+
+def numerated_variables(s: str, n : int) -> List[str]:
+    """Genera una lista di variabili numerate a partire da una stringa di base e un numero n."""
+    return [f"{s}{i+1}" for i in range(n)]
 """
 n = Monomio.parse(str(input()))
 m = Monomio.parse(str(input()))
@@ -433,9 +436,6 @@ print(is_divisible_mons(n, m))
 #print(division_mon(n, m))
 print(mcm_mon(n, m))
 """
-
-print('Inserire variabili:')
-state.ringvar = str(input()).split(',')
 
 """
 f = lead_term(Polinomio.parse(input()))
