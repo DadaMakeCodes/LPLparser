@@ -21,7 +21,7 @@ def Imul(I: List[Polinomio], J: List[Polinomio]) -> List[Polinomio]:
     for f in I:
         for g in J:
             prods.append(Ordinamento.normal_pol_form(f * g))
-    return Ordinamento.reduced_grobner_basis(prods)
+    return prods
 
 def isEqual(I: List[Polinomio], J: List[Polinomio]) -> bool:
     GbI = Ordinamento.reduced_grobner_basis(I)
@@ -43,13 +43,18 @@ def isEqual2(I: List[Polinomio], J: List[Polinomio]) -> bool:
 
 print('Inserire variabili:')
 state.ringvar = str(input()).split(',')
+#print('Inserire numero variabili:')
+#state.ringvar = Ordinamento.numerated_variables(str(input()), int(input()))
+print('Variabili:', state.ringvar)
+#print('M:', state.M)
 
 I = generateIdeal()
-J = generateIdeal()
-
-print(f'Grobner basis of I: ({", ".join(str(p) for p in Ordinamento.reduced_grobner_basis(I))})')
-print(f'Grobner basis of J: ({", ".join(str(p) for p in Ordinamento.reduced_grobner_basis(J))})')
-print(f'I in J: {isIinJ(I, J)}')
-print(f'Sum:({", ".join(str(p) for p in Isum(I, J))})')
-print(f'Product:({", ".join(str(p) for p in Imul(I, J))})')
+J = Ordinamento.reduced_grobner_basis(I)
+print(f'Grobner basis of I: ({", ".join(str(p) for p in J)})')
+print('Inserire polinomio da testare per appartenenza all\'ideale I:')
+f = Polinomio.parse(str(input()))
+if is_pol_in_ideal(f, J):
+    print(f'Il polinomio {f} appartiene all\'ideale I.')
+else:
+    print(f'Il polinomio {f} non appartiene all\'ideale I.')    
 # print(normal_pol_form(p1))
